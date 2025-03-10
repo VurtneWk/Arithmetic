@@ -24,7 +24,7 @@ class Solution {
         ListNode* p = head;
         ListNode* q = head;
         int number = 0;
-        // 求链表的长度，因为k的长度可能大于链表长度
+        // 求链表的长度，因为k的长度可能大于链表长度  O(n)
         for (ListNode* k = head; k != nullptr; k = k->next) {
             number++;
         }
