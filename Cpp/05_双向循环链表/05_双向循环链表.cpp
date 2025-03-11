@@ -10,16 +10,23 @@ struct Node {
     Node* next_;
 };
 
-class DoubleLink {
+class DoubleCircleLink {
    public:
-    DoubleLink() { head_ = new Node(); }
-    ~DoubleLink() {
-        Node* p = head_;
-        while (p != nullptr) {
-            head_ = head_->next_;
+    DoubleCircleLink() {
+        head_ = new Node();
+        head_->next_ = head_;
+        head_->pre_ = head_;
+    }
+    ~DoubleCircleLink() {
+        Node* p = head_->next_;
+        while (p != head_) {
+            head_->next_ = p->next_;
+            p->next_->pre_ = head_;
             delete p;
-            p = head_;
+            p = head_->next_;  // 让P重新指向第一个节点 进行删除
         }
+        delete head_;
+        head_ = nullptr;
     }
     // 头插法
     void insertHead(int val) {
@@ -27,33 +34,25 @@ class DoubleLink {
         Node* node = new Node(val);
         node->next_ = head_->next_;
         node->pre_ = head_;
-        // 如果不是一开始 只有一个头节点的话，处理原来的第二个节点
-        if (head_->next_ != nullptr) {
-            head_->next_->pre_ = node;
-        }
+        head_->next_->pre_ = node;
         head_->next_ = node;
     }
     // 尾插法
     void insertTail(int val) {
-        // 先找尾节点
-        Node* p = head_;
-        while (p->next_ != nullptr) {
-            p = p->next_;
-        }
+        Node* p = head_->pre_;  // 尾节点
         Node* node = new Node(val);
         node->pre_ = p;
+        node->next_ = head_;
         p->next_ = node;
+        head_->pre_ = node;
     }
     // 节点删除
     void remove(int val) {
         Node* p = head_->next_;
-        while (p != nullptr) {
+        while (p != head_) {
             if (p->data_ == val) {
                 p->pre_->next_ = p->next_;
-                // p 如果是最后一个，则 p->next_ 是null
-                if (p->next_ != nullptr) {
-                    p->next_->pre_ = p->pre_;
-                }
+                p->next_->pre_ = p->pre_;
                 // 如果想要删除多个，则去掉 return ，去掉下面的注释
                 // Node* temp = p->next_;
                 delete p;
@@ -63,11 +62,10 @@ class DoubleLink {
             p = p->next_;
         }
     }
-
     // 节点搜索
     bool find(int val) {
         Node* p = head_->next_;
-        while (p != nullptr) {
+        while (p != head_) {
             if (p->data_ == val) {
                 return true;
             } else {
@@ -79,7 +77,7 @@ class DoubleLink {
     // 链表节点输出
     void show() {
         Node* p = head_->next_;
-        while (p != nullptr) {
+        while (p != head_) {
             cout << p->data_ << " ";
             p = p->next_;
         }
@@ -91,7 +89,7 @@ class DoubleLink {
 };
 
 int main() {
-    DoubleLink dlink;
+    DoubleCircleLink dlink;
 
     dlink.insertHead(100);
 
