@@ -42,7 +42,7 @@ class SeqStack {
         memcpy(temp, mpStack, mTop * sizeof(int));
         delete[] mpStack;
         mpStack = temp;
-        mCapacity = mCapacity * 2
+        mCapacity = mCapacity * 2;
     }
 };
 
