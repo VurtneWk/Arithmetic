@@ -2,7 +2,8 @@
 #include <iostream>
 
 using namespace std;
-
+// 链式栈
+#if 0
 class LinkStack {
    public:
     LinkStack() : size_(0) { head_ = new Node(); }
@@ -57,7 +58,6 @@ class LinkStack {
 int main() {
     int arr[] = {12, 4, 56, 7, 89, 31, 53, 75};
     LinkStack s;
-
     for (int v : arr) {
         s.push(v);
     }
@@ -71,4 +71,55 @@ int main() {
     cout << endl;
 
     cout << s.size() << endl;
+}
+#endif
+
+// 中缀表达式 ==> 后缀表达式
+// 简化 只考虑正数和个位数
+
+bool priority(char ch, char topch) {
+    if ((ch == '*' || ch == '/') && (topch == '+' || topch == '-')) return true;
+    if (topch == '(' && ch != ')') return true;
+    return false;
+}
+
+string middleToEndExpr(string expr) {
+    string result;
+    stack<char> s;
+    for (auto&& ch : expr) {
+        if (ch >= '0' && ch <= '9') {
+            result.push_back(ch);
+        } else {
+            if (s.empty() || ch == '(') {
+                s.push(ch);
+            } else {
+                for (;;) {
+                    // 处理符号了
+                    if (s.empty() || ch == '(') {
+                        s.push(ch);
+                        break;
+                    }
+                    // 比较当前符号ch和栈顶符号top的优先级
+                    char topch = s.top();
+                    // Priority:true ch > topch   false ch <= topch
+                    if (priority(ch, topch)) {
+                        s.push(ch);
+                        break;
+                    } else {
+                        s.pop();
+                        if (topch == '(')  // 如果遇见)，一直出栈，直到(
+                            break;
+                        result.push_back(topch);
+                    }
+                }
+            }
+        }
+    }
+    return result;
+}
+
+int main() {
+    cout << middleToEndExpr("(1+2)*(3+4)") << endl;
+    cout << middleToEndExpr("2+(4+6)/2+6/3") << endl;
+    cout << middleToEndExpr("2+6/(4-2)+(4+6)/2") << endl;
 }
