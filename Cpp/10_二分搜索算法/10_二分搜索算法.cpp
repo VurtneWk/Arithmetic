@@ -49,7 +49,7 @@ int binarySearch(int arr[], int start, int end, int val) {
 // 二分搜索递归代码
 int binarySearch(int arr[], int size, int val) { return binarySearch(arr, 0, size - 1, val); }
 
-// 测试二分搜索
+// 测试 二分搜索
 int main() {
     int arr[] = {12, 25, 34, 39, 45, 57, 63, 78, 82, 96, 100};
     int size = sizeof arr / sizeof arr[0];
