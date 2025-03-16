@@ -51,7 +51,9 @@
                 "variant": "cpp",
                 "vector": "cpp",
                 "algorithm": "cpp",
-                "__config": "c"
+                "__config": "c",
+                "__availability": "cpp",
+                "list": "cpp"
         },
         "C_Cpp.clang_format_style": "{ BasedOnStyle: Google,IndentWidth: 4,  ColumnLimit: 120 }",
 }
