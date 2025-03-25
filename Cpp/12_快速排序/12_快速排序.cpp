@@ -7,7 +7,7 @@
 #include <iostream>
 using namespace std;
 
-// **三数取中法**
+// **三数取中法  注意：数大相乘可能溢出**
 int medianOfThree(int arr[], int left, int mid, int right) {
     if ((arr[left] - arr[mid]) * (arr[right] - arr[left]) >= 0)
         return left;

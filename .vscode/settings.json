@@ -56,7 +56,8 @@
                 "list": "cpp",
                 "unordered_set": "cpp",
                 "set": "cpp",
-                "__tree": "cpp"
+                "__tree": "cpp",
+                "map": "cpp"
         },
         "C_Cpp.clang_format_style": "{ BasedOnStyle: Google,IndentWidth: 4,  ColumnLimit: 120 }",
 }
